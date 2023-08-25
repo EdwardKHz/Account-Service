@@ -1,4 +1,9 @@
 package account.model;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+import java.util.List;
 
 public class UserAdapter implements UserDetails {
 
@@ -9,23 +14,18 @@ public class UserAdapter implements UserDetails {
     }
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(user.getAuthority()));
+    }
+
+    @Override
     public String getPassword() {
         return user.getPassword();
     }
 
     @Override
-    public String getName() {
-        return user.getName();
-    }
-
-    @Override
-    public String getEmail() {
+    public String getUsername() {
         return user.getEmail();
-    }
-
-    @Override
-    public String getLastName() {
-        return user.getLastName();
     }
 
     @Override
@@ -47,4 +47,8 @@ public class UserAdapter implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
+
+
+
